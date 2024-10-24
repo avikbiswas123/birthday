@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #ffe4e1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+    }
+
+    .instruction {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 10px;
+      animation: fadeIn 2s infinite alternate;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: #d4af37;
+      border-radius: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.5s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 150px;
+      background: #f5deb3;
+      top: -10px;
+      transform-origin: top;
+      transition: transform 1s;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(-120deg);
+    }
+
+    .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 200px;
+      background-color: #ffcccc;
+      border-radius: 10px;
+      display: none;
+      padding: 20px;
+      animation: bounceIn 1.5s forwards;
+      z-index: 2;
+    }
+
+    .card p {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    .cake {
+      display: none;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -30%);
+      width: 250px;
+      height: 250px;
+      background: pink;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .candles {
+      display: flex;
+      justify-content: center;
+      margin-top: -50px;
+      gap: 10px;
+    }
+
+    .candle {
+      width: 10px;
+      height: 50px;
+      background-color: yellow;
+      position: relative;
+    }
+
+    .flame {
+      width: 10px;
+      height: 20px;
+      background: orange;
+      border-radius: 50%;
+      position: absolute;
+      top: -20px;
+      left: 0;
+      animation: flicker 0.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.2); }
+    }
+
+    @keyframes cut {
+      0% { height: 100%; }
+      100% { height: 0%; }
+    }
+
+    .balloon {
+      display: none;
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle, #ff69b4 60%, #ff1493 100%);
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      animation: float 2s infinite alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); }
+      100% { transform: scale(0); }
+    }
+
+    .album {
+      display: none;
+      width: 300px;
+      height: 200px;
+      background-color: #fafafa;
+      border: 2px dashed #333;
+      margin-top: 20px;
+      text-align: center;
+      padding-top: 60px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="instruction">Click on the envelope to open!</p>
+
+    <div class="envelope" onclick="openEnvelope()">
+      <div class="flap"></div>
+    </div>
+
+    <div class="card" id="card">
+      <p>🎉 Happy Birthday! 🎉</p>
+    </div>
+
+    <div class="cake" id="cake">
+      <div class="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+      <p class="instruction">Click to blow candles and cut the cake!</p>
+    </div>
+
+    <button class="balloon" id="balloon" onclick="popBalloon()">🎈</button>
+
+    <p id="ageMessage" style="display:none; margin-top: 20px;">🎂 You are 25 years old!</p>
+
+    <div class="album" id="album" onclick="showAlbum()"><a href="album.html">Click here to see memories</a></div>
+  </div>
+
+  <audio id="birthdaySong" src="https://www.soundjay.com/misc/sounds/birthday-song-01.mp3"></audio>
+
+  <script>
+    function openEnvelope() {
+      document.querySelector('.envelope').classList.add('open');
+      setTimeout(() => {
+        document.getElementById('card').style.display = 'block';
+        document.getElementById('birthdaySong').play();
+        setTimeout(showCake, 3000); 
+      }, 1000);
+      document.querySelector(".instruction").style.display="none"
+    }
+
+    function showCake() {
+      document.getElementById('card').style.display = 'none';
+      document.querySelector('.envelope').style.display = 'none';
+      document.getElementById('cake').style.display = 'block';
+    }
+
+    document.getElementById('cake').onclick = function () {
+      blowCandlesAndCutCake();
+    };
+
+    function blowCandlesAndCutCake() {
+      document.querySelectorAll('.flame').forEach(flame => flame.style.display = 'none');
+      alert("🎂 Candles blown! Cutting the cake...");
+      document.getElementById('cake').style.animation = 'cut 2s forwards';
+      setTimeout(() => {
+        document.getElementById('cake').style.display = 'none';
+        document.getElementById('balloon').style.display = 'inline-block';
+      }, 2000);
+    }
+
+    function popBalloon() {
+      document.getElementById('balloon').style.animation = 'pop 0.5s forwards';
+      setTimeout(() => {
+        document.getElementById('ageMessage').style.display = 'block';
+        setTimeout(showAlbumDiv, 3000);
+      }, 500);
+    }
+
+    function showAlbumDiv() {
+      document.getElementById('album').style.display = 'block';
+    }
+
+    function showAlbum() {
+      alert("🎉 Here are our beautiful memories together!");
+    }
+  </script>
+</body>
+</html>

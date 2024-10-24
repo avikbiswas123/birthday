@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Image Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        /* The clickable div */
+        #triggerDiv {
+            width: 200px;
+            height: 50px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #triggerDiv:hover {
+            background-color: #2980b9;
+        }
+
+        /* The album container (hidden initially) */
+        #albumContainer {
+            position: absolute;
+            top: 100vh;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transition: all 1s ease;
+            z-index: -1;
+        }
+
+        /* The sliding effect class when album appears */
+        #albumContainer.show {
+            top: 0;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        /* Style for images */
+        .albumImage {
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .albumImage:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Clickable div -->
+    <div id="triggerDiv">Click to View Album</div>
+
+    <!-- Hidden image album -->
+    <div id="albumContainer">
+        <img src="WhatsApp Image 2024-10-24 at 22.55.50_1842d6e1.jpg" alt="Image 1" class="albumImage">
+        <img src="WhatsApp Image 2024-10-24 at 23.00.40_2f84b3ad.jpg" alt="Image 2" class="albumImage">
+        <img src="WhatsApp Image 2024-10-24 at 23.00.40_de7ce65d.jpg" alt="Image 3" class="albumImage">
+        <img src="WhatsApp Image 2024-10-24 at 23.00.41_96a4c49c.jpg" alt="Image 4" class="albumImage">
+        <img src="WhatsApp Image 2024-10-24 at 23.00.42_f6bb1033.jpg" alt="Image 5" class="albumImage">
+    </div>
+
+    <script>
+        const triggerDiv = document.getElementById('triggerDiv');
+        const albumContainer = document.getElementById('albumContainer');
+
+        // Click event listener
+        triggerDiv.addEventListener('click', function() {
+            // Show alert
+            alert('Here comes the album');
+            
+            // Add class to show the album with a smooth slide-in effect
+            albumContainer.classList.add('show');
+        });
+    </script>
+
+</body>
+</html>
